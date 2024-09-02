@@ -29,14 +29,14 @@ public abstract class AbstractGeneralValidSupport implements GeneralValid {
     @Override
     public void validObjectFieldNotNull(Object object, Class<?> clazz, boolean objectCheck, String... ignoreFieldNames) {
         if (objectCheck && object == null) {
-            throw new RuntimeException("object is null");
+            throw new IllegalArgumentException("object is null");
         }
         List<String> ignoreFieldNameList = ignoreFieldNames.length > 0 ? Arrays.asList(ignoreFieldNames) : Collections.emptyList();
         ReflectProvider.doWithLocalFields(clazz, field -> {
             if (CAN_CHECK_FIELD.ignore(field) && !ignoreFieldNameList.contains(field.getName())) {
                 Object fieldValue = ReflectProvider.getFieldValue(field, object);
                 if (fieldValue == null) {
-                    throw new RuntimeException(field.getName() + " is null");
+                    throw new IllegalArgumentException(field.getName() + " is null");
                 }
             }
         });
@@ -56,7 +56,7 @@ public abstract class AbstractGeneralValidSupport implements GeneralValid {
             }
             Object fieldValue = ReflectProvider.getFieldValue(field, object);
             if (fieldValue == null) {
-                throw new RuntimeException(field.getName() + " is null");
+                throw new IllegalArgumentException(field.getName() + " is null");
             }
             fieldCheck.check(field, fieldValue);
         });
@@ -65,11 +65,11 @@ public abstract class AbstractGeneralValidSupport implements GeneralValid {
     @Override
     public void validSingleField(String fieldName, Object object, Class<?> clazz, FieldCheck fieldCheck) {
         if (object == null) {
-            throw new RuntimeException("object is null");
+            throw new IllegalArgumentException("object is null");
         }
         Field field = ReflectProvider.findField(clazz, fieldName);
         if (field == null) {
-            throw new RuntimeException("field is null");
+            throw new IllegalArgumentException("field is null");
         }
         fieldCheck.check(field, ReflectProvider.getFieldValue(field, object));
     }
