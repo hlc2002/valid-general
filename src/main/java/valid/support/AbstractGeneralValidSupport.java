@@ -13,7 +13,7 @@ import java.util.*;
  * @version 1.0
  */
 @SuppressWarnings("all")
-public class AbstractGeneralValidSupport implements GeneralValid {
+public abstract class AbstractGeneralValidSupport implements GeneralValid {
 
     @Override
     public void validObjectFieldNotNull(Object object, Class<?> clazz) {
