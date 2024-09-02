@@ -36,20 +36,21 @@ public class AbstractCustomValidSupport extends AbstractGeneralValidSupport impl
             }
             FieldTypeValidRule rule = ruleMap.get(field.getName());
             if (rule != null) {
+                ReflectProvider.makeAccessible(field);
                 Object fieldValue = ReflectProvider.getFieldValue(field, object);
                 if (!rule.getNullable() && fieldValue == null) {
                     throw new IllegalArgumentException(field.getName() + " is not nullable");
                 }
                 if (rule.getValueRange() != null) {
-                    if ((Integer) fieldValue > (Integer) rule.getValueRange().getMax() || (Integer) fieldValue < (Integer) rule.getValueRange().getMin()) {
-                        throw new IllegalArgumentException(field.getName() + " is not in range");
+                    if ((Long) fieldValue > rule.getValueRange().getMax() || (Long) fieldValue < rule.getValueRange().getMin()) {
+                        throw new IllegalArgumentException(field.getName() + " is not in [" + rule.getValueRange().getMin() + "," + rule.getValueRange().getMax() + "]");
                     }
                 }
                 if (rule.getArrayLengthRange() != null) {
                     if (fieldValue instanceof Collection) {
                         Collection collection = (Collection) fieldValue;
                         if (collection.size() > rule.getArrayLengthRange().getMax() || collection.size() < rule.getArrayLengthRange().getMin()) {
-                            throw new IllegalArgumentException(field.getName() + " is not in array length range");
+                            throw new IllegalArgumentException(field.getName() + " size is not in [" + rule.getArrayLengthRange().getMin() + "," + rule.getArrayLengthRange().getMax() + "]");
                         }
                     }
                 }

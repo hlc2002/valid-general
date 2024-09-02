@@ -17,22 +17,22 @@ public class FieldTypeValidRule {
     private ArrayLengthRange arrayLengthRange;
 
     public static class ValueRange {
-        private Object min;
-        private Object max;
+        private Long min;
+        private Long max;
 
-        public Object getMin() {
+        public Long getMin() {
             return min;
         }
 
-        public void setMin(Object min) {
+        public void setMin(Long min) {
             this.min = min;
         }
 
-        public Object getMax() {
+        public Long getMax() {
             return max;
         }
 
-        public void setMax(Object max) {
+        public void setMax(Long max) {
             this.max = max;
         }
 

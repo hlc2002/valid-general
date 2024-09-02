@@ -1,9 +1,9 @@
 package valid.test;
 
-import valid.build.FieldCheckBuilder;
-import valid.build.FieldTypeValidRule;
 
-import java.util.Map;
+import valid.support.custom.AbstractCustomValidSupport;
+
+import java.util.Arrays;
 
 /**
  * @author spring
@@ -13,9 +13,11 @@ import java.util.Map;
  */
 public class TestStarter {
     public static void main(String[] args) {
-        Map<String, FieldTypeValidRule> ruleMap = FieldCheckBuilder.buildRuleMap(QueryDataRequest.class);
-        for (Map.Entry<String, FieldTypeValidRule> entry : ruleMap.entrySet()) {
-            System.out.println(entry.getKey() + ":" + entry.getValue());
-        }
+
+        AbstractCustomValidSupport validSupport = new AbstractCustomValidSupport();
+        QueryDataRequest queryDataRequest = new QueryDataRequest();
+        queryDataRequest.setId(-1L);
+        queryDataRequest.setStatusList(Arrays.asList(1, 2, 3, 4, 5));
+        validSupport.valid(queryDataRequest, QueryDataRequest.class);
     }
 }

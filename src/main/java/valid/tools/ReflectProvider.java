@@ -79,8 +79,7 @@ public abstract class ReflectProvider {
                 cachedFields = clazz.getDeclaredFields();
                 declaredFieldsCache.put(clazz, cachedFields.length == 0 ? NO_FIELDS : cachedFields);
             } catch (Throwable throwable) {
-                throw new IllegalStateException("Failed to introspect Class [" +
-                        clazz.getName() + "] from ClassLoader [" + clazz.getClassLoader() + "]", throwable);
+                throw throwable;
             }
         }
         return cachedFields;
@@ -197,8 +196,7 @@ public abstract class ReflectProvider {
                 }
                 declaredMethodsCache.put(clazz, cachedMethods.length == 0 ? NO_METHODS : cachedMethods);
             } catch (Throwable throwable) {
-                throw new IllegalStateException("Failed to introspect Class [" +
-                        clazz.getName() + "] from ClassLoader [" + clazz.getClassLoader() + "]", throwable);
+                throw throwable;
             }
         }
         return cachedMethods;
@@ -320,8 +318,7 @@ public abstract class ReflectProvider {
             try {
                 callBack.doWith(method);
             } catch (Throwable throwable) {
-                throw new IllegalStateException("Failed to introspect Class [" +
-                        clazz.getName() + "] from ClassLoader [" + clazz.getClassLoader() + "]", throwable);
+                throw throwable;
             }
         }
     }
@@ -351,8 +348,7 @@ public abstract class ReflectProvider {
             try {
                 callBack.doWith(method);
             } catch (Throwable throwable) {
-                throw new IllegalStateException("Failed to introspect Class [" +
-                        clazz.getName() + "] from ClassLoader [" + clazz.getClassLoader() + "]", throwable);
+                throw throwable;
             }
             if (clazz.getSuperclass() != null)
                 doWithMethods(clazz.getSuperclass(), callBack, filter);
@@ -373,8 +369,7 @@ public abstract class ReflectProvider {
             try {
                 callBack.doWith(field);
             } catch (Throwable throwable) {
-                throw new IllegalStateException("Failed to introspect Class [" +
-                        clazz.getName() + "] from ClassLoader [" + clazz.getClassLoader() + "]", throwable);
+                throw throwable;
             }
         }
     }

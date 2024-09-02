@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ValueRange {
-    int max() default Integer.MAX_VALUE;
+    long max() default Integer.MAX_VALUE;
 
-    int min() default Integer.MIN_VALUE;
+    long min() default Integer.MIN_VALUE;
 }
