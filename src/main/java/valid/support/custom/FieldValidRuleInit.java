@@ -1,9 +1,6 @@
-package valid.support;
-
-import valid.obj.FieldTypeValidRule;
+package valid.support.custom;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 
 /**
  * @author spring

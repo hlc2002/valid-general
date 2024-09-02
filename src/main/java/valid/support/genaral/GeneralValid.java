@@ -1,6 +1,4 @@
-package valid.support;
-
-import java.lang.reflect.Field;
+package valid.support.genaral;
 
 /**
  * @author spring

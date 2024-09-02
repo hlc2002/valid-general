@@ -1,4 +1,6 @@
-package valid.support;
+package valid.support.custom;
+
+import valid.support.genaral.AbstractGeneralValidSupport;
 
 /**
  * @author spring

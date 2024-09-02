@@ -1,6 +1,5 @@
-package valid.obj;
+package valid.build;
 
-import valid.support.FieldValidRuleInit;
 import valid.tools.ReflectProvider;
 
 import java.util.Map;
