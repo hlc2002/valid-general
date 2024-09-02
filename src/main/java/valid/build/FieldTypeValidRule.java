@@ -19,6 +19,7 @@ public class FieldTypeValidRule {
     public static class ValueRange {
         private Object min;
         private Object max;
+
         public Object getMin() {
             return min;
         }
@@ -34,11 +35,20 @@ public class FieldTypeValidRule {
         public void setMax(Object max) {
             this.max = max;
         }
+
+        @Override
+        public String toString() {
+            return "ValueRange{" +
+                    "min=" + min +
+                    ", max=" + max +
+                    '}';
+        }
     }
 
     public static class ArrayLengthRange {
         private int min;
         private int max;
+
         public int getMin() {
             return min;
         }
@@ -53,6 +63,14 @@ public class FieldTypeValidRule {
 
         public void setMax(int max) {
             this.max = max;
+        }
+
+        @Override
+        public String toString() {
+            return "ArrayLengthRange{" +
+                    "min=" + min +
+                    ", max=" + max +
+                    '}';
         }
     }
 
@@ -113,5 +131,17 @@ public class FieldTypeValidRule {
 
     public void setChildRuleMap(Map<String, FieldTypeValidRule> childRuleMap) {
         this.childRuleMap = childRuleMap;
+    }
+
+    @Override
+    public String toString() {
+        return "FieldTypeValidRule{" +
+                "fieldName='" + fieldName + '\'' +
+                ", type=" + type +
+                ", nullable=" + nullable +
+                ", childRuleMap=" + childRuleMap +
+                ", valueRange=" + valueRange +
+                ", arrayLengthRange=" + arrayLengthRange +
+                '}';
     }
 }

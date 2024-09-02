@@ -6,6 +6,7 @@ import valid.annotion.ValueRange;
 import valid.tools.ReflectProvider;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +46,10 @@ public class FieldCheckBuilder {
         rule.setType(field.getType());
         rule.setNullable(NULLABLE.check(field));
 
-        Map<String, FieldTypeValidRule> childRuleMap = buildRuleMap(field.getType());
-        rule.setChildRuleMap(childRuleMap);
+        if(field.getDeclaringClass().isLocalClass()) {
+            Map<String, FieldTypeValidRule> childRuleMap = buildRuleMap(field.getDeclaringClass());
+            rule.setChildRuleMap(childRuleMap);
+        }
 
         SizeRange sizeRange = field.getAnnotation(SizeRange.class);
         if (sizeRange != null) {
