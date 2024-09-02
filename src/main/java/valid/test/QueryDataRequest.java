@@ -17,6 +17,22 @@ public class QueryDataRequest {
     @ValueRange(min = 1)
     private Long id;
 
+    private DetailDataRequest detailDataRequest;
+
+
+
+    public static  class DetailDataRequest {
+        @ValueRange(min = 1)
+        private Long id;
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+        public Long getId() {
+            return id;
+        }
+    }
+
     public QueryDataRequest() {
 
     }
@@ -35,5 +51,11 @@ public class QueryDataRequest {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public DetailDataRequest getDetailDataRequest() {
+        return detailDataRequest;
+    }
+    public void setDetailDataRequest(DetailDataRequest detailDataRequest) {
+        this.detailDataRequest = detailDataRequest;
     }
 }
