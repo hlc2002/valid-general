@@ -46,7 +46,8 @@ public class FieldCheckBuilder {
         rule.setType(field.getType());
         rule.setNullable(NULLABLE.check(field));
 
-        if(field.getDeclaringClass().isLocalClass()) {
+        if (field.getDeclaringClass().isMemberClass() || field.getDeclaringClass().isAnonymousClass()
+                || field.getDeclaringClass().isLocalClass()) {
             Map<String, FieldTypeValidRule> childRuleMap = buildRuleMap(field.getDeclaringClass());
             rule.setChildRuleMap(childRuleMap);
         }
