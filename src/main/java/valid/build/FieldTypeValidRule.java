@@ -19,11 +19,44 @@ public class FieldTypeValidRule {
     public static class ValueRange {
         private Object min;
         private Object max;
+        public Object getMin() {
+            return min;
+        }
+
+        public void setMin(Object min) {
+            this.min = min;
+        }
+
+        public Object getMax() {
+            return max;
+        }
+
+        public void setMax(Object max) {
+            this.max = max;
+        }
     }
 
     public static class ArrayLengthRange {
         private int min;
         private int max;
+        public int getMin() {
+            return min;
+        }
+
+        public void setMin(int min) {
+            this.min = min;
+        }
+
+        public int getMax() {
+            return max;
+        }
+
+        public void setMax(int max) {
+            this.max = max;
+        }
+    }
+
+    public FieldTypeValidRule() {
     }
 
     public FieldTypeValidRule(String fieldName, Class<?> clazz, boolean nullable, ValueRange valueRange, ArrayLengthRange arrayLengthRange) {
@@ -72,5 +105,13 @@ public class FieldTypeValidRule {
 
     public void setArrayLengthRange(ArrayLengthRange arrayLengthRange) {
         this.arrayLengthRange = arrayLengthRange;
+    }
+
+    public Map<String, FieldTypeValidRule> getChildRuleMap() {
+        return childRuleMap;
+    }
+
+    public void setChildRuleMap(Map<String, FieldTypeValidRule> childRuleMap) {
+        this.childRuleMap = childRuleMap;
     }
 }
