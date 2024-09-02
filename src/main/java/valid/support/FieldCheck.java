@@ -1,6 +1,7 @@
 package valid.support;
 
 import java.lang.reflect.Field;
+
 /**
  * @author spring
  * @since 2024/9/2 11:45:30
@@ -9,5 +10,5 @@ import java.lang.reflect.Field;
  */
 @FunctionalInterface
 public interface FieldCheck {
-    boolean check(Field field);
+    void check(Field field, Object fieldValue);
 }
