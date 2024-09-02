@@ -117,6 +117,7 @@ public abstract class ReflectProvider {
      */
     public static Object getFieldValue(Field field, @Nullable Object obj) {
         try {
+            makeAccessible(field);
             return field.get(obj);
         } catch (IllegalAccessException e) {
             throw new IllegalStateException("Failed to get field [" + field.getName() + "] value", e);
@@ -248,6 +249,7 @@ public abstract class ReflectProvider {
     @Nullable
     public static Object invokeMethod(Method method, @Nullable Object obj, @Nullable Object... args) {
         try {
+            makeAccessible(method);
             return method.invoke(obj, args);
         } catch (Throwable throwable) {
             throw new IllegalStateException("Failed to invoke method [" + method.getName() + "]", throwable);

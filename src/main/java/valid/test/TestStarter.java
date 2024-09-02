@@ -2,6 +2,7 @@ package valid.test;
 
 
 import valid.support.custom.AbstractCustomValidSupport;
+import valid.support.genaral.AbstractGeneralValidSupport;
 
 import java.util.Arrays;
 
@@ -13,11 +14,10 @@ import java.util.Arrays;
  */
 public class TestStarter {
     public static void main(String[] args) {
-
         AbstractCustomValidSupport validSupport = new AbstractCustomValidSupport();
         QueryDataRequest queryDataRequest = new QueryDataRequest();
-        queryDataRequest.setId(-1L);
+
         queryDataRequest.setStatusList(Arrays.asList(1, 2, 3, 4, 5));
-        validSupport.valid(queryDataRequest, QueryDataRequest.class);
+        validSupport.validObjectFieldNotNull(queryDataRequest, QueryDataRequest.class);
     }
 }
