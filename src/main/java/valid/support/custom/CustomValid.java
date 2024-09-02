@@ -7,6 +7,6 @@ package valid.support.custom;
  * @version 1.0
  */
 public interface CustomValid {
-    void valid(Object object, Class<?> clazz);
-    void valid(Object object, Class<?> clazz, String... ignoreFieldNames);
+    <T> void valid(Object object, Class<T> clazz);
+    <T> void valid(Object object, Class<T> clazz, String... ignoreFieldNames);
 }

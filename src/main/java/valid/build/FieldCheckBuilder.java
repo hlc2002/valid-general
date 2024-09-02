@@ -1,5 +1,6 @@
 package valid.build;
 
+import valid.annotion.InnerClassValid;
 import valid.annotion.NotNull;
 import valid.annotion.SizeRange;
 import valid.annotion.ValueRange;
@@ -8,6 +9,7 @@ import valid.tools.ReflectProvider;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author spring
@@ -43,12 +45,6 @@ public class FieldCheckBuilder {
         rule.setType(field.getType());
         rule.setNullable(NULLABLE.check(field));
 
-        // fixme 这里如何确认内部引用类型字段，而不是jdk内部的包装类型？仅支持确认该类型下的内部类
-        if (isInnerClass(field.getType())) {
-            Map<String, FieldTypeValidRule> childRuleMap = buildRuleMap(field.getDeclaringClass());
-            rule.setChildRuleMap(childRuleMap);
-        }
-
 
         SizeRange sizeRange = field.getAnnotation(SizeRange.class);
         if (sizeRange != null) {
@@ -68,10 +64,6 @@ public class FieldCheckBuilder {
         return rule;
     }
 
-
-    private static boolean isInnerClass(Class<?> clazzB) {
-        return clazzB.isAnonymousClass();
-    }
 
     private static final Check NULLABLE = (field) -> {
         NotNull annotation = field.getAnnotation(NotNull.class);

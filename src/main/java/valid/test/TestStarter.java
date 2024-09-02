@@ -16,11 +16,8 @@ public class TestStarter {
 
         AbstractCustomValidSupport validSupport = new AbstractCustomValidSupport();
         QueryDataRequest queryDataRequest = new QueryDataRequest();
-        queryDataRequest.setId(1L);
+        queryDataRequest.setId(-1L);
         queryDataRequest.setStatusList(Arrays.asList(1, 2, 3, 4, 5));
-        QueryDataRequest.DetailDataRequest detailDataRequest = new QueryDataRequest.DetailDataRequest();
-        detailDataRequest.setId(-1L);
-        queryDataRequest.setDetailDataRequest(detailDataRequest);
         validSupport.valid(queryDataRequest, QueryDataRequest.class);
     }
 }

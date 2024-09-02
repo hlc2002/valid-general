@@ -1,10 +1,12 @@
 package valid.support.custom;
 
+import valid.annotion.InnerClassValid;
 import valid.build.FieldCheckBuilder;
 import valid.build.FieldTypeValidRule;
 import valid.support.genaral.AbstractGeneralValidSupport;
 import valid.tools.ReflectProvider;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -16,12 +18,12 @@ import java.util.*;
 @SuppressWarnings("all")
 public class AbstractCustomValidSupport extends AbstractGeneralValidSupport implements CustomValid {
     @Override
-    public void valid(Object object, Class<?> clazz) {
+    public <T> void valid(Object object, Class<T> clazz) {
         valid(object, clazz, new String[0]);
     }
 
     @Override
-    public void valid(Object object, Class<?> clazz, String... ignoreFieldNames) {
+    public <T> void valid(Object object, Class<T> clazz, String... ignoreFieldNames) {
         if (object == null) {
             throw new IllegalArgumentException("object is null");
         }
@@ -34,27 +36,36 @@ public class AbstractCustomValidSupport extends AbstractGeneralValidSupport impl
             if (ignoreFieldNameList.contains(field.getName())) {
                 return;
             }
-            FieldTypeValidRule rule = ruleMap.get(field.getName());
-            if (rule != null) {
-                ReflectProvider.makeAccessible(field);
-                Object fieldValue = ReflectProvider.getFieldValue(field, object);
-                if (!rule.getNullable() && fieldValue == null) {
-                    throw new IllegalArgumentException(field.getName() + " is not nullable");
+            ReflectProvider.makeAccessible(field);
+            InnerClassValid innerClassValid = field.getType().getAnnotation(InnerClassValid.class);
+            if (innerClassValid != null && innerClassValid.enable()) {
+                valid((T) object, field.getType());
+            } else {
+                validFieldByRuleMap(object, field, ruleMap);
+            }
+        });
+    }
+
+    private static void validFieldByRuleMap(Object object, Field field, Map<String, FieldTypeValidRule> ruleMap) {
+        FieldTypeValidRule rule = ruleMap.get(field.getName());
+        if (rule != null) {
+            Object fieldValue = ReflectProvider.getFieldValue(field, object);
+            if (!rule.getNullable() && fieldValue == null) {
+                throw new IllegalArgumentException(field.getName() + " is not nullable");
+            }
+            if (rule.getValueRange() != null) {
+                if ((Long) fieldValue > rule.getValueRange().getMax() || (Long) fieldValue < rule.getValueRange().getMin()) {
+                    throw new IllegalArgumentException(field.getName() + " is not in [" + rule.getValueRange().getMin() + "," + rule.getValueRange().getMax() + "]");
                 }
-                if (rule.getValueRange() != null) {
-                    if ((Long) fieldValue > rule.getValueRange().getMax() || (Long) fieldValue < rule.getValueRange().getMin()) {
-                        throw new IllegalArgumentException(field.getName() + " is not in [" + rule.getValueRange().getMin() + "," + rule.getValueRange().getMax() + "]");
-                    }
-                }
-                if (rule.getArrayLengthRange() != null) {
-                    if (fieldValue instanceof Collection) {
-                        Collection collection = (Collection) fieldValue;
-                        if (collection.size() > rule.getArrayLengthRange().getMax() || collection.size() < rule.getArrayLengthRange().getMin()) {
-                            throw new IllegalArgumentException(field.getName() + " size is not in [" + rule.getArrayLengthRange().getMin() + "," + rule.getArrayLengthRange().getMax() + "]");
-                        }
+            }
+            if (rule.getArrayLengthRange() != null) {
+                if (fieldValue instanceof Collection) {
+                    Collection collection = (Collection) fieldValue;
+                    if (collection.size() > rule.getArrayLengthRange().getMax() || collection.size() < rule.getArrayLengthRange().getMin()) {
+                        throw new IllegalArgumentException(field.getName() + " size is not in [" + rule.getArrayLengthRange().getMin() + "," + rule.getArrayLengthRange().getMax() + "]");
                     }
                 }
             }
-        });
+        }
     }
 }
