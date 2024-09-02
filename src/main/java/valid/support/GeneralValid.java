@@ -9,15 +9,60 @@ import java.lang.reflect.Field;
  * @version 1.0
  */
 public interface GeneralValid {
+    /**
+     * 对象字段非空校验
+     * @param object 实例对象（取值用）
+     * @param clazz 实例对象真实类型的字节码（分析字段用）
+     * @return 校验结果
+     */
     String validObjectFieldNotNull(Object object, Class<?> clazz);
 
+    /**
+     * 对象字段非空校验
+     * @param object 实例对象（取值用）
+     * @param clazz 实例对象真实类型的字节码（分析字段用）
+     * @param objectCheck 是否校验实例对象本身
+     * @return 校验结果
+     */
     String validObjectFieldNotNull(Object object, Class<?> clazz, boolean objectCheck);
 
+    /**
+     * 对象字段非空校验
+     * @param object 实例对象（取值用）
+     * @param clazz 实例对象真实类型的字节码（分析字段用）
+     * @param objectCheck 是否校验实例对象本身
+     * @param ignoreFieldNames 忽略校验的字段名
+     * @return 校验结果
+     */
     String validObjectFieldNotNull(Object object, Class<?> clazz, boolean objectCheck, String... ignoreFieldNames);
 
+    /**
+     * 对象字段校验
+     * @param object 实例对象（取值用）
+     * @param clazz 实例对象真实类型的字节码（分析字段用）
+     * @param fieldCheck 字段校验器
+     * @param fieldIgnore 字段忽略器
+     * @return 校验结果
+     */
     String validObjectField(Object object, Class<?> clazz, FieldCheck fieldCheck, FieldIgnore fieldIgnore);
 
+    /**
+     * 对象字段校验
+     * @param object 实例对象（取值用）
+     * @param clazz 实例对象真实类型的字节码（分析字段用）
+     * @param fieldCheck 字段校验器
+     * @param fieldIgnore 字段忽略器
+     * @param ignoreFieldNames 忽略校验的字段名
+     * @return 校验结果
+     */
     String validObjectField(Object object, Class<?> clazz, FieldCheck fieldCheck, FieldIgnore fieldIgnore, String... ignoreFieldNames);
 
-    String validSingleField(Field field, Object object, FieldCheck fieldCheck);
+    /**
+     * 单个字段校验
+     * @param field 字段
+     * @param object 实例对象（取值用）
+     * @param fieldCheck 字段校验器
+     * @return 校验结果
+     */
+    String validSingleField(String field, Object object, FieldCheck fieldCheck);
 }

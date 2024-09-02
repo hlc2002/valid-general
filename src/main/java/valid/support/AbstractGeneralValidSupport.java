@@ -40,7 +40,7 @@ public class AbstractGeneralValidSupport implements GeneralValid {
     }
 
     @Override
-    public String validSingleField(Field field, Object object, FieldCheck fieldCheck) {
+    public String validSingleField(String field, Object object, FieldCheck fieldCheck) {
         return EMPTY_STRING;
     }
 
